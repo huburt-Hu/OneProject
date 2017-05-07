@@ -1,0 +1,3 @@
+[submodule "android_common"]
+	path = android_common
+	url = git@github.com:huburt-Hu/android_common.git
