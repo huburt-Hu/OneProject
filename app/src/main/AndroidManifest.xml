@@ -14,9 +14,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".business.main.MainActivity">
+        <activity android:name=".business.main.MainActivity"></activity>
+        <activity android:name=".business.meizi.MeiziActivity">
+
+        </activity>
+
+        <service
+            android:name=".aidl.BookManagerService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":remote" />
+
+        <activity android:name=".aidl.BookManagerActivity"></activity>
+        <activity android:name=".business.test.TestActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

@@ -1,5 +1,7 @@
 package com.app.julie.oneproject.api;
 
+import android.support.annotation.NonNull;
+
 import com.app.julie.oneproject.BuildConfig;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
@@ -17,21 +19,32 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiManager {
 
     private static final String surfaceBaseUrl = "http://news-at.zhihu.com/";
+    private static final String meiziBaseUrl = "http://gank.io/";
 
 
     public static SurfaceService getSurfaceService() {
+        Retrofit.Builder builder = getRetrofitBuilder();
+        builder.baseUrl(surfaceBaseUrl);
+        return builder.build().create(SurfaceService.class);
+    }
+
+    public static MeiziService getMeiziService() {
+        Retrofit.Builder builder = getRetrofitBuilder();
+        builder.baseUrl(meiziBaseUrl);
+        return builder.build().create(MeiziService.class);
+    }
+
+    @NonNull
+    private static Retrofit.Builder getRetrofitBuilder() {
         OkHttpClient httpClient = new OkHttpClient();
         if (BuildConfig.DEBUG) {
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
             httpClient = new OkHttpClient.Builder().addInterceptor(logging).build();
         }
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(surfaceBaseUrl)
+        return new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .client(httpClient)
-                .build();
-        return retrofit.create(SurfaceService.class);
+                .client(httpClient);
     }
 }

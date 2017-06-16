@@ -19,4 +19,8 @@ public interface SurfaceService {
 
     @GET("api/4/news/before/{date}")
     Flowable<ZhihuEntity> getBefore(@Path("date") String date);
+
+    @GET("/api/4/news/{id}")
+    Flowable<ZhihuEntity> getZhihuStory(@Path("id") String id);
+
 }

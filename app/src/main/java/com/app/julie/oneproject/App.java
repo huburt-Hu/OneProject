@@ -9,4 +9,5 @@ import com.app.julie.common.BaseApplication;
  */
 
 public class App extends BaseApplication {
+
 }
