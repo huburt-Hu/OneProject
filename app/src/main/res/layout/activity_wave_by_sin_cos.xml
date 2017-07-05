@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:wave="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_wave_by_sin_cos"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp">
+
+        <com.app.julie.oneproject.widget.WaveViewBySinCos
+            android:id="@+id/wave_sin"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            wave:waveAmplitude="15dp"
+            wave:waveFillType="bottom"
+            wave:waveSpeed="5"
+            wave:waveStart="true"
+            wave:waveStartPeriod="1" />
+
+        <com.app.julie.oneproject.widget.WaveViewBySinCos
+            android:id="@+id/wave_sin2"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            wave:waveAmplitude="15dp"
+            wave:waveFillType="bottom"
+            wave:waveSpeed="5"
+            wave:waveStart="true"
+            wave:waveStartPeriod="2" />
+
+    </FrameLayout>
+
+
+</LinearLayout>

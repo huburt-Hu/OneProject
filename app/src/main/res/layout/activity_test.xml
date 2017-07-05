@@ -31,20 +31,20 @@
             android:id="@+id/btn4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="使用" />
+            android:text="添加随机已用" />
     </LinearLayout>
 
     <com.app.julie.oneproject.widget.TimePickerScroller
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.app.julie.oneproject.widget.TimePicker
+        <com.app.julie.oneproject.widget.TimeSectionPicker
             android:id="@+id/time_picker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp">
 
-        </com.app.julie.oneproject.widget.TimePicker>
+        </com.app.julie.oneproject.widget.TimeSectionPicker>
     </com.app.julie.oneproject.widget.TimePickerScroller>
 
 

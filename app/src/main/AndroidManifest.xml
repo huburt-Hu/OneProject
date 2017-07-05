@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.app.julie.oneproject">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -13,25 +14,37 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".business.main.MainActivity"></activity>
-        <activity android:name=".business.meizi.MeiziActivity">
+        android:theme="@style/AppTheme.NoActionBar"
+        tools:replace="android:icon, android:theme">
+        <activity android:name=".business.main.MainActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+        <activity android:name=".business.meizi.MeiziActivity" />
 
         <service
             android:name=".aidl.BookManagerService"
             android:enabled="true"
             android:exported="true"
             android:process=":remote" />
+        <activity android:name=".aidl.BookManagerActivity" />
 
-        <activity android:name=".aidl.BookManagerActivity"></activity>
-        <activity android:name=".business.test.TestActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity android:name=".business.test.TestActivity" />
+
+        <activity
+            android:name=".business.test.BottomNavigationActivity"
+            android:label="@string/title_activity_bottom_navigation"></activity>
+
+
+        <activity
+            android:name=".business.PlayerActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait">
+
         </activity>
     </application>
 
