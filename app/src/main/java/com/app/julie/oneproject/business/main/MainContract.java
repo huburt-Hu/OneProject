@@ -1,33 +1,22 @@
 package com.app.julie.oneproject.business.main;
 
-import com.app.julie.common.mvp.BasePresenterImpl;
-import com.app.julie.common.mvp.BaseViewImpl;
-import com.app.julie.oneproject.bean.ZhihuEntity;
-
-import io.reactivex.Flowable;
+import com.app.julie.common.mvp.BasePresenter;
+import com.app.julie.common.mvp.BaseView;
+import com.app.julie.oneproject.bean.UpdateEntity;
 
 /**
- * Created by julie
+ * Created by hubert
  * <p>
- * Created on 2017/5/5.
+ * Created on 2017/7/10.
  */
 
 public interface MainContract {
-
-    abstract class View extends BaseViewImpl<Presenter> {
-        public abstract void onDataReceived(ZhihuEntity entity, boolean isRefresh);
-
+    interface Presenter extends BasePresenter {
+        void checkVersion();
     }
 
-    abstract class Presenter extends BasePresenterImpl<View> {
-
-        public Presenter(View view) {
-            super(view);
-        }
-
-        public abstract void getData();
-
-        public abstract void getMoreData(String lastDate);
+    interface View extends BaseView<Presenter> {
+        void showUpdateDialog(UpdateEntity updateEntity);
     }
 
 }

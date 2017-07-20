@@ -1,8 +1,9 @@
 package com.app.julie.oneproject.api;
 
+import com.app.julie.oneproject.bean.MeiziEntity;
 import com.app.julie.oneproject.bean.ZhihuEntity;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
@@ -15,5 +16,5 @@ import retrofit2.http.Path;
 public interface MeiziService {
 
     @GET("api/data/福利/10/{page}")
-    Flowable<ZhihuEntity> getMeiziPic(@Path("page") int page);
+    Observable<MeiziEntity> getMeiziPic(@Path("page") int page);
 }

@@ -10,40 +10,41 @@
     <application
         android:name=".App"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/icon_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/icon_launcher"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar"
+        android:theme="@style/AppTheme"
         tools:replace="android:icon, android:theme">
-        <activity android:name=".business.main.MainActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".business.meizi.MeiziActivity" />
+        <activity android:name=".business.zhihu.ZhihuActivity" />
 
         <service
             android:name=".aidl.BookManagerService"
             android:enabled="true"
             android:exported="true"
             android:process=":remote" />
+
         <activity android:name=".aidl.BookManagerActivity" />
+        <activity android:name=".business.test.TimePickerActivity" />
+        <activity android:name=".business.SplashActivity"></activity>
+        <activity android:name=".business.main.BottomNavigationActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-
-        <activity android:name=".business.test.TestActivity" />
-
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
-            android:name=".business.test.BottomNavigationActivity"
-            android:label="@string/title_activity_bottom_navigation"></activity>
-
-
-        <activity
-            android:name=".business.PlayerActivity"
+            android:name=".business.palyer.PlayerActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" />
+        <activity android:name=".business.film.FilmActivity" />
+        <activity android:name=".business.test.CircleWaveActivity" />
+        <activity android:name=".business.zhihudetail.ZhihuDetailActivity" />
+        <activity android:name=".business.meizi.MeiziActivity"></activity>
+        <activity android:name=".business.photo.PhotoActivity" />
+        <activity android:name=".business.test.WaveBySinCosActivity"></activity>
+        <activity android:name=".business.test.TestActivity">
 
         </activity>
     </application>

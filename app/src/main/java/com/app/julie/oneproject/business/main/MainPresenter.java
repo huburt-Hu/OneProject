@@ -1,90 +1,63 @@
 package com.app.julie.oneproject.business.main;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+
+import com.app.julie.common.base.BaseBean;
+import com.app.julie.common.mvp.BasePresenterImpl;
+import com.app.julie.common.mvp.RespObserver;
+import com.app.julie.common.util.SPUtils;
 import com.app.julie.oneproject.api.ApiManager;
-import com.app.julie.oneproject.api.SurfaceService;
-import com.app.julie.oneproject.bean.ZhihuEntity;
-
-import java.util.concurrent.TimeUnit;
-
-import io.reactivex.Flowable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
+import com.app.julie.oneproject.bean.UpdateEntity;
+import com.app.julie.oneproject.constant.SpConstant;
 
 /**
- * Created by julie
+ * Created by hubert
  * <p>
- * Created on 2017/5/5.
+ * Created on 2017/7/10.
  */
 
-public class MainPresenter extends MainContract.Presenter {
+public class MainPresenter extends BasePresenterImpl<MainContract.View>
+        implements MainContract.Presenter {
 
-    private CompositeDisposable compositeDisposable;
-    private SurfaceService surfaceService;
+    //提示更新间隔
+    public static final int INTERVAL = 1000 * 60 * 60 * 24 * 7;
 
     public MainPresenter(MainContract.View view) {
         super(view);
     }
 
+
     @Override
-    public void start() {
-        compositeDisposable = new CompositeDisposable();
-        surfaceService = ApiManager.getSurfaceService();
+    public void checkVersion() {
+        ApiManager.getMyWebService()
+                .checkVersion()
+                .compose(this.<BaseBean<UpdateEntity>>getRequestTransformer())
+                .subscribe(new RespObserver<BaseBean<UpdateEntity>>() {
+                    @Override
+                    public void success(BaseBean<UpdateEntity> updateEntityBaseBean) {
+                        UpdateEntity data = updateEntityBaseBean.getData();
+                        if (data.getVersionCode() > getVersionCode()) {
+                            long last = new SPUtils(SpConstant.SP_UPDATE).getLong(SpConstant.LAST_ALERT_TIME);
+                            long currentTimeMillis = System.currentTimeMillis();
+                            if (currentTimeMillis - last > INTERVAL) {
+                                getView().showUpdateDialog(data);
+                            }
+                        }
+                    }
+                });
     }
 
-    @Override
-    public void finish() {
-        compositeDisposable.clear();
-    }
-
-    @Override
-    public void getData() {
-
-        Flowable<ZhihuEntity> flowable = surfaceService.getLatest();
-        compositeDisposable.add(flowable.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ZhihuEntity>() {
-                    @Override
-                    public void accept(@NonNull ZhihuEntity zhihuEntity) throws Exception {
-                        if (isViewActive()) {
-                            getView().onDataReceived(zhihuEntity,true);
-                        }
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(@NonNull Throwable throwable) throws Exception {
-                        throwable.printStackTrace();
-                        if (isViewActive()) {
-                            getView().showToast("网络异常!");
-                        }
-                    }
-                }));
-    }
-
-    @Override
-    public void getMoreData(String lastDate) {
-        compositeDisposable.add(surfaceService.getBefore(lastDate)
-                .delay(1, TimeUnit.SECONDS)//模拟延迟，注意要在observeOn之前调用
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ZhihuEntity>() {
-                    @Override
-                    public void accept(@NonNull ZhihuEntity entity) throws Exception {
-                        if (isViewActive()) {
-                            getView().onDataReceived(entity, false);
-                        }
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(@NonNull Throwable throwable) throws Exception {
-                        throwable.printStackTrace();
-                        if (isViewActive()) {
-                            getView().showToast("网络异常!");
-                        }
-                    }
-                }));
+    private int getVersionCode() {
+        PackageManager packageManager = getContext().getPackageManager();
+        PackageInfo packageInfo;
+        int versionCode = 1;
+        try {
+            packageInfo = packageManager.getPackageInfo(getContext().getPackageName(), 0);
+            versionCode = packageInfo.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return versionCode;
     }
 }

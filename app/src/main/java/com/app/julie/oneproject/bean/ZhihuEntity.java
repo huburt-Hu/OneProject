@@ -58,7 +58,7 @@ public class ZhihuEntity {
         private String ga_prefix;
         private boolean multipic;
         private int type;
-        private int id;
+        private String id;
         private List<String> images;
         private String image;
 
@@ -94,11 +94,11 @@ public class ZhihuEntity {
             this.type = type;
         }
 
-        public int getId() {
+        public String getId() {
             return id;
         }
 
-        public void setId(int id) {
+        public void setId(String id) {
             this.id = id;
         }
 

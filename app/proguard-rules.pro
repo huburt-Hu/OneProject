@@ -128,4 +128,9 @@
      <init>(android.view.View);
 }
 
+#bomb支付
+-libraryjars libs/BmobPay_v3.x.x_xxxxxx.jar
+-keepclasseswithmembers class c.b.** { *; }
+-keep interface c.b.PListener{ *; }
+-keep interface c.b.QListener{ *; }
 #-------------------------------------------------------------------------
